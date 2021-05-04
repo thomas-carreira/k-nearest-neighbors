@@ -73,7 +73,7 @@ def compute_euclidean_dist_no_loops(x_train, x_test):
     """
     num_test = x_test.shape[0]
     num_train = x_train.shape[0]
-    dists = np.zeros((num_test, num_train)) 
+    dists = np.zeros((num_test, num_train))
     #########################################################################
     # TODO:                                                                 #
     # Compute the l2 distance between all test points and all training      #
@@ -86,7 +86,7 @@ def compute_euclidean_dist_no_loops(x_train, x_test):
     # HINT: Try to formulate the l2 distance using matrix multiplication    #
     #       and two broadcast sums.                                         #
     #########################################################################
-    dists = np.sqrt((x_test**2).sum(axis=1)[:, np.newaxis] + (x_train**2).sum(axis=1) - 2 * x_test.dot(x_train.T))
+    dists = np.sqrt((x_test ** 2).sum(axis=1)[:, np.newaxis] + (x_train ** 2).sum(axis=1) - 2 * x_test.dot(x_train.T))
     #########################################################################
     #                         END OF YOUR CODE                              #
     #########################################################################
@@ -110,7 +110,7 @@ def compute_mahalanobis_dist(x_train, x_test, sigma):
     """
     num_test = x_test.shape[0]
     num_train = x_train.shape[0]
-    dists = np.zeros((num_test, num_train)) 
+    dists = np.zeros((num_test, num_train))
     #########################################################################
     # TODO:                                                                 #
     # Compute the Mahalanobis distance between all test points and all      #
@@ -118,8 +118,9 @@ def compute_mahalanobis_dist(x_train, x_test, sigma):
     # store the result in dists.                                            #
     #                                                                       #
     #########################################################################
-    # Your code here
-    pass
+    for i in range(num_test):
+        dist = np.sum(((x_test[i] - x_train) ** 2).dot(sigma), axis=1)
+        dists[i, :] = np.sqrt(dist)
     #########################################################################
     #                         END OF YOUR CODE                              #
     #########################################################################
@@ -147,8 +148,9 @@ def get_sigma(X, method):
         #                                                                       #
         # Recall : the variance is the diagonal from the covariance matrix      #
         #########################################################################
-        # Your code here
-        pass
+        avg_var = cov.diagonal().sum() / d
+        sigma = np.zeros((d, d))
+        np.fill_diagonal(sigma, avg_var)
         #########################################################################
         #                         END OF YOUR CODE                              #
         #########################################################################
@@ -159,8 +161,8 @@ def get_sigma(X, method):
         # the variance of each feature                                          #
         #                                                                       #
         #########################################################################
-        # Your code here
-        pass
+        sigma = np.zeros((d, d))
+        np.fill_diagonal(sigma, cov.diagonal())
         #########################################################################
         #                         END OF YOUR CODE                              #
         #########################################################################
@@ -170,8 +172,7 @@ def get_sigma(X, method):
         # Computre Σ as the full covariance matrix between all pairs of features#
         #                                                                       #
         #########################################################################
-        # Your code here
-        pass
+        sigma = cov
         #########################################################################
         #                         END OF YOUR CODE                              #
         #########################################################################
