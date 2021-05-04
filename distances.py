@@ -28,7 +28,10 @@ def compute_euclidean_dist_two_loops(x_train, x_test):
             # training point, and store the result in dists[i, j]. You should   #
             # not use a loop over dimension.                                    #
             #####################################################################
-            dists[i, j] = np.sum(np.sqrt((x_test[i] - x_train[j])*(x_test[i] - x_train[j]))) / length
+            # dist = np.sum((x_test[i] - x_train[j])**2)
+            # dists[i, j] = np.sqrt(dist)
+
+            dists[i, j] = np.linalg.norm(x_test[i] - x_train[j])
             #####################################################################
             #                       END OF YOUR CODE                            #
             #####################################################################
@@ -51,8 +54,10 @@ def compute_euclidean_dist_one_loop(x_train, x_test):
         # Compute the l2 distance between the ith test point and all training #
         # points, and store the result in dists[i, :].                        #
         #######################################################################
-        # Your code here
-        pass
+        # dist = np.sum((x_test[i] - x_train) ** 2, axis=1)
+        # dists[i, :] = np.sqrt(dist)
+
+        dists[i, :] = np.linalg.norm(x_test[i] - x_train, axis=1)
         #######################################################################
         #                         END OF YOUR CODE                            #
         #######################################################################
@@ -81,8 +86,7 @@ def compute_euclidean_dist_no_loops(x_train, x_test):
     # HINT: Try to formulate the l2 distance using matrix multiplication    #
     #       and two broadcast sums.                                         #
     #########################################################################
-    # Your code here
-    pass
+    dists = np.sqrt((x_test**2).sum(axis=1)[:, np.newaxis] + (x_train**2).sum(axis=1) - 2 * x_test.dot(x_train.T))
     #########################################################################
     #                         END OF YOUR CODE                              #
     #########################################################################
