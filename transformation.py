@@ -67,9 +67,7 @@ def draw(ax, X, color='green'):
     #                                                                       #
     # This is not a difficult implementation ...                            #
     #########################################################################
-    # Your code here
-    pass
-
+    ax.plot(X[0, :], X[1, :], color)
     #########################################################################
     #                         END OF YOUR CODE                              #
     #########################################################################
@@ -102,13 +100,21 @@ def unit_circle_points(n):
     # The revert function [::-1] and np.concatenate may be usefull to       #
     # construct X (You have to implement the draw function, make sure that  #
     # the points in X follow each other, otherwise you will have straight   #
-    #lines in the middle of your plot.                                      #
+    # lines in the middle of your plot.                                      #
     #                                                                       #
     # Why X is a 2 by 2*n array ? (don't answer this questions the goal is  #
     # to help you)                                                          #
     #########################################################################
-    # Your code here
-    pass
+    x = np.linspace(-1, 1, n)
+    y = np.sqrt(1 - x**2)
+
+    x = np.concatenate((x, x[::-1]))
+    y = np.concatenate((y, -y[::-1]))
+
+    x = x[np.newaxis, :]
+    y = y[np.newaxis, :]
+
+    X = np.concatenate((x, y), axis=0)
     #########################################################################
     #                         END OF YOUR CODE                              #
     #########################################################################
@@ -133,8 +139,7 @@ def apply_transformation_AX(X, A):
     # TODO:                                                                 #
     # Apply a linear transformation which is given by a matrix A on X       #
     #########################################################################
-    # Your code here
-    pass
+    AX = np.dot(A, X)
     #########################################################################
     #                         END OF YOUR CODE                              #
     #########################################################################
@@ -163,9 +168,8 @@ def apply_transformation_Z(Z, A):
     # circle.                                                               #
     # HINT:  Look up the function numpy.linalg.inv                          #
     #########################################################################
-    # your code here
-    pass
-
+    A_inv = np.linalg.inv(A)
+    X = np.dot(A_inv, Z)
     #########################################################################
     #                         END OF YOUR CODE                              #
     #########################################################################
