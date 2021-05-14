@@ -100,7 +100,7 @@ def unit_circle_points(n):
     # The revert function [::-1] and np.concatenate may be usefull to       #
     # construct X (You have to implement the draw function, make sure that  #
     # the points in X follow each other, otherwise you will have straight   #
-    # lines in the middle of your plot.                                      #
+    # lines in the middle of your plot.                                     #
     #                                                                       #
     # Why X is a 2 by 2*n array ? (don't answer this questions the goal is  #
     # to help you)                                                          #
@@ -169,6 +169,7 @@ def apply_transformation_Z(Z, A):
     # HINT:  Look up the function numpy.linalg.inv                          #
     #########################################################################
     A_inv = np.linalg.inv(A)
+    print(A)
     X = np.dot(A_inv, Z)
     #########################################################################
     #                         END OF YOUR CODE                              #

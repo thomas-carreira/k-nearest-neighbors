@@ -118,9 +118,12 @@ def compute_mahalanobis_dist(x_train, x_test, sigma):
     # store the result in dists.                                            #
     #                                                                       #
     #########################################################################
+    sigma_inv = np.linalg.inv(sigma)
     for i in range(num_test):
-        dist = np.sum(((x_test[i] - x_train) ** 2).dot(sigma), axis=1)
-        dists[i, :] = np.sqrt(dist)
+        diff = x_test[i] - x_train
+        dist = diff.dot(sigma_inv).dot(diff.T)
+        # Je ne prends que la diagonal, car c'est la qu'est stocké la somme de la multiplication
+        dists[i] = np.sqrt(dist.diagonal())
     #########################################################################
     #                         END OF YOUR CODE                              #
     #########################################################################
@@ -169,7 +172,7 @@ def get_sigma(X, method):
     elif method == 'full_cov':
         #########################################################################
         # TODO:                                                                 #
-        # Computre Σ as the full covariance matrix between all pairs of features#
+        # Compute Σ as the full covariance matrix between all pairs of features#
         #                                                                       #
         #########################################################################
         sigma = cov
